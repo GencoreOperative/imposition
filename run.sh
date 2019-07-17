@@ -1,0 +1,4 @@
+java -cp /root/multivalent.jar tool.pdf.Impose -verbose -dim 2x2 -paper A4 -range 1-16 -layout "8,1,5u,4u,2,7,3u,6u" /mount/test.pdf --outfile /mount/test1.pdf
+java -cp /root/multivalent.jar tool.pdf.Impose -verbose -dim 2x2 -paper A4 -range 17-32 -layout "8,1,5u,4u,2,7,3u,6u" /mount/test.pdf --outfile /mount/test2.pdf
+java -cp /root/multivalent.jar tool.pdf.Impose -verbose -dim 2x2 -paper A4 -range 33-48 -layout "8,1,5u,4u,2,7,3u,6u" /mount/test.pdf --outfile /mount/test3.pdf
+java -cp /root/multivalent.jar tool.pdf.Impose -verbose -dim 2x2 -paper A4 -range 49-64 -layout "8,1,5u,4u,2,7,3u,6u" /mount/test.pdf --outfile /mount/test4.pdf
