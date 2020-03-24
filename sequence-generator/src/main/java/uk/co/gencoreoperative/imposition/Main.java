@@ -1,9 +1,5 @@
 package uk.co.gencoreoperative.imposition;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 /**
  * This utility needs perform the following steps:
  * <ul>
@@ -17,40 +13,11 @@ import java.util.stream.IntStream;
  * </p>
  */
 public class Main {
-    public String process(int total) {
-        // Make even
-        if (total % 2 != 0) {
-            total = total +1;
-        }
-
-        String result = "";
-        List<String> numbers = IntStream.range(1, total + 1).mapToObj(String::valueOf).collect(Collectors.toList());
-        boolean leftRight = false;
-        while (!numbers.isEmpty()) {
-            String number = numbers.remove(numbers.size() - 1);
-            result += number + (leftRight ? "l" : "r");
-            result += ",";
-
-            number = numbers.remove(0);
-            result += number + (leftRight ? "l" : "r");
-            result += ",";
-
-            leftRight = !leftRight;
-        }
-
-        // Trim the trailing comma
-        if (result.length() != 0) {
-            result = result.substring(0, result.length() - ",".length());
-        }
-
-        return result;
-    }
-
     public static void main(String... args) {
         if (args.length != 1) {
             throw new IllegalArgumentException("Page total required");
         }
         int total = Integer.parseInt(args[0]);
-        System.out.println(new Main().process(total));
+        System.out.println(new A5Imposition().generateSequence(total));
     }
 }
