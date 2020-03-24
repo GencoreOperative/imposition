@@ -9,6 +9,9 @@ RUN apt-get install -y curl bc
 RUN curl -L https://github.com/tsibley/multivalent-tools/raw/master/Multivalent20060102.jar -o /root/multivalent.jar
 
 COPY *.sh /root/
+RUN chmod +x /root/*.sh
+
+COPY sequence-generator-0.1.jar /root/
 
 WORKDIR /root
-CMD bash run-2-by-1.sh
+ENTRYPOINT ["/bin/bash", "/root/run-2-by-1.sh"]
