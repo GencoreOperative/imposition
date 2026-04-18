@@ -36,15 +36,36 @@ docker build -f docker-a6/Dockerfile docker-a6 -t imposition:a6
 
 # Run
 
-To create an A5 imposition from an A4 document, we can use the following command
-from a folder which contains the PDF document to layout:
+## Using the Wrapper Script (Recommended)
 
-```
-docker run --rm -ti -v "${PWD}":/mount imposition:a5
+The easiest way to use the tool is with the provided wrapper script:
+
+```bash
+# Process a PDF with default output naming (creates myfile-imposed.pdf)
+./imposition-a5 myfile.pdf
+
+# Process a PDF with custom output name
+./imposition-a5 myfile.pdf -o output.pdf
+
+# View help
+./imposition-a5 --help
 ```
 
-If we want to create an A6 imposition we can use the following command:
+The wrapper script handles all the Docker complexity and pipes data via STDIN/STDOUT.
 
+## Using Docker Directly
+
+You can also call Docker directly if you prefer:
+
+```bash
+# Process a PDF and save to output.pdf
+cat mydocument.pdf | docker run --rm -i imposition:a5 > output.pdf
 ```
-docker run --rm -ti -v "${PWD}":/mount imposition:a6
-```
+
+## How It Works
+
+- Input PDF is read from STDIN
+- The tool analyzes the page count and generates an imposition sequence
+- Pages are arranged in 1x2 layout on A4 paper for printing
+- Output is written to STDOUT as a new PDF file
+- All processing happens in a temporary container (no files on disk during processing)

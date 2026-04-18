@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Minimal wrapper for imposition Docker image
+# Reads PDF from file, pipes to Docker, outputs result to file
+
+if [ $# -eq 0 ] || [[ "$1" == "-"* ]]; then
+    # No file argument or option flag - pass through to Docker for help/error handling
+    docker run --rm -i imposition:a5 "$@"
+else
+    # File argument - generate output filename, create it, and pipe to Docker
+    INPUT_FILE="$1"
+    OUTPUT_FILE="${INPUT_FILE%.*}-imposed.pdf"
+    touch "$OUTPUT_FILE"
+    cat "$INPUT_FILE" | docker run --rm -i imposition:a5 > "$OUTPUT_FILE"
+fi
+
