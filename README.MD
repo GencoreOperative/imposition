@@ -40,17 +40,24 @@ docker build -f docker-signatures/Dockerfile docker-signatures -t signatures:lat
 The easiest way to use the A5 imposition tool is with the provided wrapper script:
 
 ```bash
-# Process a PDF with default output naming (creates myfile-imposed.pdf)
+# Process a PDF with default settings (A4 output)
 ./imposition-a5 myfile.pdf
+
+# Process with custom paper size
+./imposition-a5 myfile.pdf --paper A3
 
 # View help
 ./imposition-a5 --help
 ```
 
+**Options:**
+- `--paper <size>` - Output paper size (default: A4). Common sizes: A3, A4, A5, Letter, Legal
+
 Or call Docker directly:
 
 ```bash
 cat mydocument.pdf | docker run --rm -i imposition:a5 > output.pdf
+cat mydocument.pdf | docker run --rm -i imposition:a5 --paper A3 > output.pdf
 ```
 
 ## Splitting into Signatures
@@ -91,8 +98,9 @@ Each PDF can be printed and then folded in half for manual binding.
 ### A5 Imposition
 - Input PDF is read from STDIN
 - The tool analyzes the page count and generates an imposition sequence
-- Pages are arranged in 1x2 layout on A4 paper for printing
+- Pages are arranged in 1x2 layout on specified paper size for printing
 - Output is written to STDOUT as a new PDF file
+- **Note**: The underlying Multivalent tool does not support margin/spacing adjustments with custom layouts. Only paper size can be specified.
 
 ### Signatures Splitting
 - Input PDF is read from STDIN
