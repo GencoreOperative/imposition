@@ -7,7 +7,9 @@ FROM adoptopenjdk/openjdk11:jre-11.0.19_7
 RUN apt-get update
 RUN apt-get install -y curl bc
 
-COPY Multivalent20060102.jar /root/multivalent.jar
+# Download the patched Multivalent JAR from the multivalent-tools GitHub project
+# This JAR includes the margin bug fix (Units.getLength NullPointerException patch)
+RUN curl -L https://github.com/GencoreOperative/multivalent-tools/raw/refs/heads/master/Multivalent20060102-patched.jar -o /root/multivalent.jar
 
 COPY entrypoint.sh /root/
 RUN chmod +x /root/entrypoint.sh
