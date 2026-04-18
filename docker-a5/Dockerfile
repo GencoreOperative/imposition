@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM adoptopenjdk/openjdk11:jre-11.0.19_7
 
 # docker build . -t imposition:latest
 # docker run --rm -ti -v ${PWD}:/mount imposition:latest
@@ -6,7 +6,7 @@ FROM openjdk:11
 RUN apt-get update
 RUN apt-get install -y curl bc
 
-RUN curl -L https://github.com/tsibley/multivalent-tools/raw/master/Multivalent20060102.jar -o /root/multivalent.jar
+RUN curl -L https://github.com/GencoreOperative/multivalent-tools/raw/refs/heads/master/Multivalent20060102-patched.jar -o /root/multivalent.jar
 
 COPY *.sh /root/
 RUN chmod +x /root/*.sh
