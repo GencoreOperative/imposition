@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Minimal wrapper for signatures Docker image
+# Reads PDF from file, pipes to Docker with signature size, outputs result to file
+
+if [ $# -eq 0 ] || [[ "$1" == "-"* ]]; then
+    # No file argument or option flag - pass through to Docker for help/error handling
+    docker run --rm -i signatures:latest "$@"
+else
+    # File argument with signature size - generate output filename, create it, and pipe to Docker
+    INPUT_FILE="$1"
+    SIGNATURE_SIZE="${2:-16}"
+    OUTPUT_FILE="${INPUT_FILE%.*}-signatures.zip"
+    touch "$OUTPUT_FILE"
+    cat "$INPUT_FILE" | docker run --rm -i signatures:latest "$SIGNATURE_SIZE" > "$OUTPUT_FILE"
+fi
